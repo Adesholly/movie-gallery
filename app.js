@@ -3,11 +3,26 @@ const APIURL = "https://api.themoviedb.org/3/discover/movie?sort_by=upcoming.des
 
 const IMGPATH = "https://image.tmdb.org/t/p/w1280"
 
+const SEARCHAPI = "https://api.themoviedb.org/3/search/movie?&api_key=04c35731a5ee918f014970082a0088b1&query=";
 
-
+let count = 50;
 const mainEl = document.querySelector('.main')
-async function getMovieByTopRated (){
-    const topRated = await fetch("https://api.themoviedb.org/3/discover/movie?sort_by=top_rated.desc&api_key=04c35731a5ee918f014970082a0088b1&page=1");
+const formEl = document.getElementById('form')
+const searchEl = document.querySelectorAll('.search')
+
+async function upcomingMovie(url){
+    const respond = await fetch(url);
+    const respondData = await respond.json();
+
+    showMovies(respondData.results);
+
+}
+
+async function getMovieByTopRated(){
+    const topRated = await fetch('https://api.themoviedb.org/3/discover/movie?sort_by=top_rated.desc&api_key=04c35731a5ee918f014970082a0088b1&page='+count);
+    
+    const respondData = await topRated.json();
+    showMovies(respondData.results);
 }
 
 async function getMoviesByPopularity(){
@@ -15,9 +30,22 @@ async function getMoviesByPopularity(){
 
     const respondData = await respond.json()
     console.log(respondData);
+    showMovies(respondData.results);
 
+}
 
-    respondData.results.forEach(movie => {
+async function getMoviesByRevenue(){
+    const revenue = await fetch("https://api.themoviedb.org/3/discover/movie?sort_by=revenue.desc&api_key=04c35731a5ee918f014970082a0088b1&page=1");
+    const respondData = await revenue.json();
+    showMovies(respondData.results);
+}
+
+function showMovies(movies){
+
+    //clean movies first
+    mainEl.innerHTML = '';
+
+    movies.forEach(movie => {
 
         const {title, vote_average, poster_path} = movie;
         
@@ -37,16 +65,7 @@ async function getMoviesByPopularity(){
          
         `;
         mainEl.appendChild(movieCard);
-
-
-        
     });
-
-
-}
-
-async function getMoviesByRevenue(){
-    const revenue = await fetch("https://api.themoviedb.org/3/discover/movie?sort_by=revenue.desc&api_key=04c35731a5ee918f014970082a0088b1&page=1");
 
 }
 
@@ -62,10 +81,34 @@ function getRatingClass(rating){
     
 }
 
-getMoviesByPopularity()
+
+//searching for movies
+formEl.addEventListener('submit', async (e) =>{
+    e.preventDefault();
+    
+    const searchTerm = searchEl.value
+    const movies = SEARCHAPI + searchTerm
+    upcomingMovie(movies.results);
+})
 
 
 
 
+//navigation bar
+
+const nav = document.querySelector('.nav')
+const iconBar = document.querySelector('.icon i')
+
+function navToggler(){
+    iconBar.classList.toggle('fa-bars');
+    iconBar.classList.toggle('fa-times');
+    nav.classList.toggle('nav-active');
+
+}
+
+iconBar.addEventListener('click', ()=>{
+    navToggler();
+});
 
 
+upcomingMovie(APIURL);

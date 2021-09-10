@@ -4,22 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie Gallery</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+
     <link rel="stylesheet" href="normal.css">
     <script src="app.js" defer></script>
 </head>
 <body>
     <header>
-        <nav>
+        <nav class="nav">
             <a href="">All category</a>
-            <a href="">Popularity</a>
-            <a href="">Country</a>
-            <a href="">Nothing</a>
-            <a href="javascript:void(0);" class="icon"
-             onclick="mobileIcon()"></a>
+            <a href="javascript:getMoviesByPopularity();">Popularity</a>
+            <a href="javascript:getMoviesByRevenue()">High Grossing</a>
+            <a href="javascript:getMovieByTopRated()">Top Rated</a>
+            
         </nav>
-
-        <form>
-           <input type="text" placeholder="Search for Movies..."/>
+        <div class="icon"><i class="fas fa-bars"></i></div>
+        <form id="form">
+           <input type="text" class="search" placeholder="Search..."/>
     
         </form>
     </header>
