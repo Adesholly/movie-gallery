@@ -1,14 +1,14 @@
 const APIKEY = "04c35731a5ee918f014970082a0088b1";
-const APIURL = "https://api.themoviedb.org/3/discover/movie?sort_by=upcoming.desc&api_key=04c35731a5ee918f014970082a0088b1&page=1";
+const APIURL = "https://api.themoviedb.org/3/discover/movie?sort_by=upcoming.desc&api_key=04c35731a5ee918f014970082a0088b1&page=";
 
 const IMGPATH = "https://image.tmdb.org/t/p/w1280"
 
 const SEARCHAPI = "https://api.themoviedb.org/3/search/movie?&api_key=04c35731a5ee918f014970082a0088b1&query=";
 
-let count = 50;
+let count = 10;
 const mainEl = document.querySelector('.main')
 const formEl = document.getElementById('form')
-const searchEl = document.querySelectorAll('.search')
+const searchEl = document.querySelector('.search')
 
 async function upcomingMovie(url){
     const respond = await fetch(url);
@@ -47,7 +47,7 @@ function showMovies(movies){
 
     movies.forEach(movie => {
 
-        const {title, vote_average, poster_path} = movie;
+        const {title, vote_average, poster_path, overview} = movie;
         
         const movieCard = document.createElement('div');
 
@@ -61,7 +61,11 @@ function showMovies(movies){
                 <h3>${title}</h3>
                 <span class="${getRatingClass(vote_average)}">
                 ${vote_average}</span>
-            </div>    
+            </div>
+            
+            <div class="overview">
+                <h2>Overview:</h2>
+            ${overview}</div>    
          
         `;
         mainEl.appendChild(movieCard);
@@ -83,12 +87,19 @@ function getRatingClass(rating){
 
 
 //searching for movies
-formEl.addEventListener('submit', async (e) =>{
+formEl.addEventListener('submit', (e) =>{
     e.preventDefault();
     
-    const searchTerm = searchEl.value
-    const movies = SEARCHAPI + searchTerm
-    upcomingMovie(movies.results);
+    const searchTerm = searchEl.value;
+
+    if(searchTerm){
+
+        upcomingMovie(SEARCHAPI + searchTerm);
+        searchEl.value = "";
+        console.log(searchTerm)
+    }
+    
+
 })
 
 
@@ -111,4 +122,4 @@ iconBar.addEventListener('click', ()=>{
 });
 
 
-upcomingMovie(APIURL);
+upcomingMovie(APIURL + count);
