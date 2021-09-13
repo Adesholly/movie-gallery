@@ -98,6 +98,20 @@ formEl.addEventListener('submit', (e) =>{
         searchEl.value = "";
         console.log(searchTerm)
     }
+    else{
+        const notFound = document.createElement('div')
+        notFound.classList.add('not-found');
+
+        notFound.innerHTML = `
+            <div class="not-found>
+                <img src="not_found.jpg" alt=""/>
+                <h2>Sorry we couldn't find any matches for<b>not found</b>
+                <p> Please try search with another term</p>
+            </div>"
+        
+        `;
+        mainEl.appendChild(notFound);
+    }
     
 
 })

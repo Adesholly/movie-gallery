@@ -94,6 +94,14 @@ nav a:hover{
     
 }
 
+
+.not-found {
+    margin: auto;
+    background-color: rgb(235, 230, 242);
+    width: 450px;
+    height: 300px;
+}
+
 .movies-card {
     background-color: rgb(71, 34, 116);
     width: 300px;
@@ -141,21 +149,6 @@ nav a:hover{
     color: rgb(163, 49, 49);
 }
 
-.overview {
-    background-color: #fff;
-    position: absolute;
-    text-align: center;
-    padding: 2rem;
-    right: 0;
-    left: 0;
-    bottom: 0;  
-    transform: translateY(124%);
-    transition: transform 0.3s ease-in;
-    
-}
-.movies-card:hover .overview {
-    transform: translateY(0);
-}
 
 
 /* Mobile phone */
@@ -173,6 +166,7 @@ nav a:hover{
         width: 50%;
         background-color:  rgb(99, 53, 145);
         transition: all 400ms;
+        z-index: 2;
        
 
     }
@@ -195,3 +189,23 @@ nav a:hover{
         margin: 1rem;
     }
 } 
+
+
+
+.overview {
+    background-color: #fff;
+    position: absolute;
+    text-align: center;
+    padding: 2rem;
+    right: 0;
+    left: 0;
+    bottom: 0;  
+    max-height: 100vh;
+    overflow: auto;
+    transform: translateY(124%);
+    transition: transform 0.3s ease-in;
+    
+}
+.movies-card:hover .overview {
+    transform: translateY(0);
+}
